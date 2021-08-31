@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
-source env.sh
+set -e
 
+source env.sh || (echo "Scripts must be run from the root project folder!" && exit 1)
 
 # objconv
 cd "$ROOT/other"

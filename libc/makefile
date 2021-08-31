@@ -1,6 +1,9 @@
-DEFAULT_HOST=$(shell ../default-host.sh)
+ROOT=$(shell cd .. && pwd)
+OS_NAME=$(shell $(ROOT)/scripts/os-name.sh)
+
+DEFAULT_HOST=$(shell $(ROOT)/scripts/default-host.sh)
 HOST?=DEFAULT_HOST
-HOSTARCH=$(shell ../target-triplet-to-arch.sh $(HOST))
+HOSTARCH=$(shell $(ROOT)/scripts/target-triplet-to-arch.sh $(HOST))
  
 CFLAGS?=-O2 -g
 CPPFLAGS?=

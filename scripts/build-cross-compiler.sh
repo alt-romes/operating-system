@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-source env.sh
+set -e
 
-# TODO: add repos as submodules
+source env.sh || (echo "Scripts must be run from the root project folder!" && exit 1)
 
 
 # binutils
@@ -15,7 +15,7 @@ git clone git://sourceware.org/git/binutils-gdb.git
 
 mkdir -p build-binutils
 cd build-binutils
-../binutils-gdb/configure --target=$TARGET --prefix="$PREFIX" --with-sysroot --disable-nls --disable-werror
+../binutils-gdb/configure --target="$TARGET" --prefix="$PREFIX" --with-sysroot --disable-nls --disable-werror
 make
 make install
 
@@ -25,12 +25,14 @@ cd "$ROOT/cross"
 
 git clone git://gcc.gnu.org/git/gcc.git
 
-which -- $TARGET-as || echo $TARGET-as is not in the PATH
+which -- "$TARGET-as" || echo "$TARGET-as" is not in the PATH
 
 mkdir -p build-gcc
 cd build-gcc
-../gcc/configure --target=$TARGET --prefix="$PREFIX" --disable-nls --enable-languages=c --without-headers
+../gcc/configure --target="$TARGET" --prefix="$PREFIX" --disable-nls --enable-languages=c --without-headers
 make all-gcc
 make all-target-libgcc
 make install-gcc
 make install-target-libgcc
+
+cd "$ROOT"

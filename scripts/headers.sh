@@ -1,6 +1,9 @@
-#!/bin/sh
+#!/bin/bash
 set -e
-. ./config.sh
+
+source env.sh || (echo "Scripts must be run from the root project folder!" && exit 1)
+
+. "$ROOT/scripts/config.sh"
  
 mkdir -p "$SYSROOT"
  

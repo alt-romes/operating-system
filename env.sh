@@ -1,6 +1,7 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-export ROOT="$(pwd)"
+ROOT="$(echo $( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd ))"
+export ROOT
 
 export PREFIX="$ROOT/opt/cross"
 export TARGET=i686-elf
