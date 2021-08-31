@@ -1,23 +1,21 @@
 #!/usr/bin/env bash
 
-export ROOT="$(pwd)"
+source env.sh
 
-export PREFIX="$ROOT/opt/cross"
-export TARGET=i686-elf
-export PATH="$PREFIX/bin:$PATH"
+# TODO: add repos as submodules
+
 
 # binutils
-# cd "$ROOT/src"
-# echo $(pwd)
-# mkdir -p build-binutils
-# cd build-binutils
-# ../binutils-gdb/configure --target=$TARGET --prefix="$PREFIX" --with-sysroot --disable-nls --disable-werror
-# make
-# make install
+cd "$ROOT/cross"
+mkdir -p build-binutils
+cd build-binutils
+../binutils-gdb/configure --target=$TARGET --prefix="$PREFIX" --with-sysroot --disable-nls --disable-werror
+make
+make install
 
 
-# # gcc
-cd "$ROOT/src"
+# gcc
+cd "$ROOT/cross"
 which -- $TARGET-as || echo $TARGET-as is not in the PATH
 
 mkdir -p build-gcc
