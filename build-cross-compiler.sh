@@ -7,6 +7,12 @@ source env.sh
 
 # binutils
 cd "$ROOT/cross"
+
+git clone git://sourceware.org/git/binutils-gdb.git
+
+# curl -LO https://ftp.gnu.org/gnu/binutils/binutils-2.37.tar.gz
+# tar zxf binutils-2.37.tar.gz
+
 mkdir -p build-binutils
 cd build-binutils
 ../binutils-gdb/configure --target=$TARGET --prefix="$PREFIX" --with-sysroot --disable-nls --disable-werror
@@ -16,6 +22,9 @@ make install
 
 # gcc
 cd "$ROOT/cross"
+
+git clone git://gcc.gnu.org/git/gcc.git
+
 which -- $TARGET-as || echo $TARGET-as is not in the PATH
 
 mkdir -p build-gcc
