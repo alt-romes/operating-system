@@ -1,4 +1,4 @@
-CC = /Users/romes/projects/kernel/opt/cross/bin/i686-elf-gcc
+CC = /Users/romes/projects/osrm/opt/cross/bin/i686-elf-gcc
 CFLAGS = -std=gnu99 -ffreestanding -O2 -Wall -Wextra -Wno-array-bounds
 
 os.bin: kernel.o boot.o
