@@ -48,22 +48,22 @@ BINARIES=libk.a
 all: $(BINARIES)
  
 libc.a: $(OBJS)
-	@$(AR) rcs $@ $(OBJS)
+	$(AR) rcs $@ $(OBJS)
  
 libk.a: $(LIBK_OBJS)
-	@$(AR) rcs $@ $(LIBK_OBJS)
+	$(AR) rcs $@ $(LIBK_OBJS)
  
 %.c.o: %.c
-	@$(CC) -MD -c $< -o $@ -std=gnu11 $(CFLAGS) $(CPPFLAGS)
+	$(CC) -MD -c $< -o $@ -std=gnu11 $(CFLAGS) $(CPPFLAGS)
  
 %.s.o: %.s
-	@$(CC) -MD -c $< -o $@ $(CFLAGS) $(CPPFLAGS)
+	$(CC) -MD -c $< -o $@ $(CFLAGS) $(CPPFLAGS)
  
 %.c.libk.o: %.c
-	@$(CC) -MD -c $< -o $@ -std=gnu11 $(LIBK_CFLAGS) $(LIBK_CPPFLAGS)
+	$(CC) -MD -c $< -o $@ -std=gnu11 $(LIBK_CFLAGS) $(LIBK_CPPFLAGS)
  
 %.s.libk.o: %.s
-	@$(CC) -MD -c $< -o $@ $(LIBK_CFLAGS) $(LIBK_CPPFLAGS)
+	$(CC) -MD -c $< -o $@ $(LIBK_CFLAGS) $(LIBK_CPPFLAGS)
 
 -include $(OBJS:.o=.d)
 -include $(LIBK_OBJS:.o=.d)
