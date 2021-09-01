@@ -5,4 +5,4 @@ source env.sh || (echo "Scripts must be run from the root project folder!" && ex
 
 . "$ROOT/scripts/iso.sh"
  
-"qemu-system-$("$ROOT/scripts/target-triplet-to-arch.sh" "$HOST")" -cdrom "$ROOT/osrm.iso"
+"qemu-system-i386" -cdrom "$ROOT/osrm.iso"

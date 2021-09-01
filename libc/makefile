@@ -1,29 +1,21 @@
 ROOT=$(shell cd .. && pwd)
 OS_NAME=$(shell $(ROOT)/scripts/os-name.sh)
 
-DEFAULT_HOST=$(shell $(ROOT)/scripts/default-host.sh)
-HOST?=DEFAULT_HOST
-HOSTARCH=$(shell $(ROOT)/scripts/target-triplet-to-arch.sh $(HOST))
+HOST=$(shell $(ROOT)/scripts/default-host.sh)
+HOSTARCH=i386
+
+ARCHDIR=arch/$(HOSTARCH)
  
+include $(ARCHDIR)/make.config
+ 
+# Compilation flags 
 CFLAGS?=-O2 -g
 CPPFLAGS?=
-LDFLAGS?=
-LIBS?=
- 
-DESTDIR?=
-PREFIX?=/usr/local
-EXEC_PREFIX?=$(PREFIX)
-INCLUDEDIR?=$(PREFIX)/include
-LIBDIR?=$(EXEC_PREFIX)/lib
  
 CFLAGS:=$(CFLAGS) -ffreestanding -Wall -Wextra
 CPPFLAGS:=$(CPPFLAGS) -D__is_libc -Iinclude
 LIBK_CFLAGS:=$(CFLAGS)
 LIBK_CPPFLAGS:=$(CPPFLAGS) -D__is_libk
- 
-ARCHDIR=arch/$(HOSTARCH)
- 
-include $(ARCHDIR)/make.config
  
 CFLAGS:=$(CFLAGS) $(ARCH_CFLAGS)
 CPPFLAGS:=$(CPPFLAGS) $(ARCH_CPPFLAGS)
@@ -45,6 +37,13 @@ $(FREEOBJS) \
 $(HOSTEDOBJS) \
  
 LIBK_OBJS=$(FREEOBJS:.o=.libk.o)
+
+DESTDIR?=
+PREFIX?=/usr/local
+EXEC_PREFIX?=$(PREFIX)
+INCLUDEDIR?=$(PREFIX)/include
+LIBDIR?=$(EXEC_PREFIX)/lib
+ 
  
 #BINARIES=libc.a libk.a # Not ready for libc yet.
 BINARIES=libk.a
