@@ -1,13 +1,13 @@
-.PHONY: clean run
+.PHONY: clean build iso run
 
-kernel/osrm.kernel:
+build:
 	./scripts/build.sh
 
-osrm.iso:
+iso:
 	./scripts/iso.sh
 
 clean:
 	./scripts/clean.sh
 
-run: clean kernel/osrm.kernel osrm.iso
+run: clean build iso
 	./scripts/qemu.sh
