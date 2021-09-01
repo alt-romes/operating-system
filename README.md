@@ -1,26 +1,35 @@
-cross-compilation and cross? grub:
+cross-compilation and cross(?) grub:
 ```
 ./build-cross-compiler.sh # builds gcc targeting elf-i686 and binutils targeting elf-i686
 ./build-grub.sh # builds grub and its dependencies, and uses the elf-i686 binutils and gcc above to compile grub
 ```
 
-load environment to work on the OS (e.g. elf-i686-gcc to $PATH). should be done on the directory containing `env.sh` to correctly set `$ROOT`, et etc...
+load environment to work on the OS (e.g. add (cross) elf-i686-gcc to $PATH) (should be done on the directory containing `env.sh` to correctly set `$ROOT`)
 ```
 source env.sh
 ```
 
 building kernel:
 ```
-cd src
 make
 ```
 
 building iso file with grub and running:
 ```
-make run # boot from iso file
+make run
 ```
 
-alternatively run the kernel directly using qemu (which can boot kernels "adhering to" multiboot):
+editing the make configuration
 ```
-make run2 # boot using qemu support for multiboot
+vim config/environment.make.config
 ```
+
+the process is currently described as follows:
+- `make` variables are defined in `config/environment.make.config`
+- `kernel/` contains the kernel code, `kernel/makefile` can build the kernel image `$(OS_NAME).kernel` (but requires libc/libk to be in `sysroot`), and can install the kernel and include header files to `sysroot` with `make install` (run in `kernel/`)
+- `libc/` contains the freestanding `libk` and the hosted `libc` (to be developed) code, it compiles the libraries and saves them to `sysroot` with `make install` (in `libc`, or `make -C libc install` from `$ROOT`)
+- `sysroot/` is a directory built when compiling the OS. It resembles the `/` file hierarchy of UNIX, storing the kernel in `/boot` and library headers in `/usr/include` and libraries in `/usr/lib`. It's used in compilation to store (first) all header files (so that the compilation succeedes), and then, for now, `/usr/lib/libk.a` (already required to be present here when building the kernel) and `/boot/os_name.kernel`
+- `isodir/` is a directory built when creating the `.iso` bootable cdrom, and holds the kernel (copied from `sysroot/boot/os_name.kernel`) and GRUB config (copied from `config/grub.cfg`)
+- `scripts/` contains useful scripts (for now scripts to build the cross compiler)
+- `cross/` is generated when building the cross compiler, `opt/` has the built cross compilation and grub binaries
+- `env.sh` is a script that sets the `$ROOT` environment variable to the project's root, and adds the cross compilation tools from `opt/` to the `$PATH` environment variable
