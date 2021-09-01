@@ -70,3 +70,4 @@ install-kernel: $(OS_NAME).kernel
 
 help:
 	@echo "Don't forget to source ../scripts/config.sh to set CC and other environment variables"
+

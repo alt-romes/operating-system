@@ -9,5 +9,5 @@ iso:
 clean:
 	./scripts/clean.sh
 
-run: clean build iso
+run:
 	./scripts/qemu.sh
