@@ -4,6 +4,8 @@ set -e
 
 source env.sh || (echo "Scripts must be run from the root project folder!" && exit 1)
 
+TARGET=i686-elf
+PREFIX="$ROOT/opt/cross"
 
 # binutils
 cd "$ROOT/cross"

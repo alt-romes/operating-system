@@ -1,16 +1,12 @@
 ROOT=$(shell cd .. && pwd)
-OS_NAME=$(shell $(ROOT)/scripts/os-name.sh)
-
-HOST=$(shell $(ROOT)/scripts/default-host.sh)
-HOSTARCH= i386
+include $(ROOT)/config/environment.make.config
 
 ARCHDIR=arch/$(HOSTARCH)
  
 include $(ARCHDIR)/make.config
  
 # Compilation flags
-CFLAGS?=-O2 -g # C flags
-CPPFLAGS?= 	   # C preprocessor flags
+# Default CFLAGS && CPPFLAGS defined in $ROOT/config/environment.make.config
 
 CFLAGS:=$(CFLAGS) -ffreestanding -Wall -Wextra
 CPPFLAGS:=$(CPPFLAGS) -D__is_kernel -Iinclude
@@ -35,14 +31,14 @@ KERNEL_OBJS=$(KERNEL_SRCS:%=%.o)
 all: $(OS_NAME).kernel
  
 $(OS_NAME).kernel: $(KERNEL_OBJS) $(ARCHDIR)/linker.ld
-	@$(CC) -T $(ARCHDIR)/linker.ld -o $@ $(CFLAGS) $(KERNEL_OBJS) $(LIBS)
+	$(CC) -T $(ARCHDIR)/linker.ld -o $@ $(CFLAGS) $(KERNEL_OBJS) $(LIBS)
 	@if grub-file --is-x86-multiboot $(OS_NAME).kernel; then echo "success, kernel is multiboot"; fi
  
 %.c.o: %.c
-	@$(CC) -MD -c $< -o $@ -std=gnu11 $(CFLAGS) $(CPPFLAGS)
+	$(CC) -MD -c $< -o $@ -std=gnu11 $(CFLAGS) $(CPPFLAGS)
  
 %.s.o: %.s
-	@$(CC) -MD -c $< -o $@ $(CFLAGS) $(CPPFLAGS)
+	$(CC) -MD -c $< -o $@ $(CFLAGS) $(CPPFLAGS)
 
 # include rules from auto dependencies generated with -MD
 -include $(KERNEL_OBJS:.o=.d)
@@ -54,11 +50,6 @@ clean:
 	@rm -f $(KERNEL_OBJS:.o=.d)
  
 install: install-headers install-kernel
-
-# Sysroot destination, boot dir, include dir
-DESTDIR?=../sysroot
-BOOTDIR?=/boot
-INCLUDEDIR?=/usr/include
  
 install-headers:
 	@mkdir -p $(DESTDIR)$(INCLUDEDIR)
