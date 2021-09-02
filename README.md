@@ -1,3 +1,7 @@
+**Features**
+- kernel printf through the VGA text mode
+- flat memory model (Global Descriptor Table entries are all full-width and overlapping (base is 0B and limit is 4GB), i.e. memory segmentation is unused / invisible)
+
 cross-compilation and cross(?) grub:
 ```
 ./build-cross-compiler.sh # builds gcc targeting elf-i686 and binutils targeting elf-i686
