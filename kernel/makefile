@@ -21,7 +21,7 @@ LDFLAGS:=$(LDFLAGS) $(KERNEL_ARCH_LDFLAGS)
 LIBS:=$(LIBS) $(KERNEL_ARCH_LIBS)
  
 # Kernel dependencies (architecture dependencies + kernel)
-KERNEL_SRCS=$(KERNEL_ARCH_SRCS) kernel/kernel.c
+KERNEL_SRCS=$(KERNEL_ARCH_SRCS) kernel/setup_gdt.s kernel/kernel.c
 
 # Objects to make the kernel are the kernel objects :)
 KERNEL_OBJS=$(KERNEL_SRCS:%=%.o)
@@ -58,7 +58,4 @@ install-headers:
 install-kernel: $(OS_NAME).kernel
 	@mkdir -p $(DESTDIR)$(BOOTDIR)
 	@cp $(OS_NAME).kernel $(DESTDIR)$(BOOTDIR)
-
-help:
-	@echo "Don't forget to source ../scripts/config.sh to set CC and other environment variables"
 
