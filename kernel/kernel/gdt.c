@@ -1,3 +1,5 @@
+#include <kernel/gdt.h>
+
 // Used for creating GDT segment descriptors in 64-bit integer form.
 #include <stdio.h>
 #include <stdint.h>
@@ -108,12 +110,12 @@ uint64_t create_descriptor(uint32_t base, uint32_t limit, uint16_t flag)
     return descriptor;
 }
 
-
-void create_gdt(uint64_t gdt[5]) {
+void create_gdt(void) {
     gdt[0] = create_descriptor(0, 0, 0);
     gdt[1] = create_descriptor(0, 0xFFFFFFFF, (GDT_CODE_PL0));
     gdt[2] = create_descriptor(0, 0xFFFFFFFF, (GDT_DATA_PL0));
     gdt[3] = create_descriptor(0, 0xFFFFFFFF, (GDT_CODE_PL3));
     gdt[4] = create_descriptor(0, 0xFFFFFFFF, (GDT_DATA_PL3));
+    return;
 }
 

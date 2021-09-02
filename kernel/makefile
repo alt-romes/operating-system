@@ -21,7 +21,8 @@ LDFLAGS:=$(LDFLAGS) $(KERNEL_ARCH_LDFLAGS)
 LIBS:=$(LIBS) $(KERNEL_ARCH_LIBS)
  
 # Kernel dependencies (architecture dependencies + kernel)
-KERNEL_SRCS=$(KERNEL_ARCH_SRCS) kernel/setup_gdt.s kernel/kernel.c
+SRC_DIRS=kernel
+KERNEL_SRCS=$(KERNEL_ARCH_SRCS) $(shell find $(SRC_DIRS) -name *.s -or -name *.c)
 
 # Objects to make the kernel are the kernel objects :)
 KERNEL_OBJS=$(KERNEL_SRCS:%=%.o)

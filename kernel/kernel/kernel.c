@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 #include <kernel/tty.h>
-/* #include <kernel/gdt.h> */
+#include <kernel/gdt.h>
 
 extern void setup_gdt(void);
 

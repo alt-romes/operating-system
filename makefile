@@ -15,18 +15,18 @@ headers:
 	$(MAKE) -C libc install-headers
 
 $(OS_NAME).iso: $(SYSROOT)/boot/$(OS_NAME).kernel
-	mkdir -p isodir/boot/grub
-	cp -f $(SYSROOT)/boot/$(OS_NAME).kernel isodir/boot/$(OS_NAME).kernel
-	cp -f config/grub.cfg isodir/boot/grub/grub.cfg
-	grub-mkrescue -o $@ isodir
+	@mkdir -p isodir/boot/grub
+	@cp -f $(SYSROOT)/boot/$(OS_NAME).kernel isodir/boot/$(OS_NAME).kernel
+	@cp -f config/grub.cfg isodir/boot/grub/grub.cfg
+	@grub-mkrescue -o $@ isodir
 
 run: $(OS_NAME).iso
 	qemu-system-$(HOSTARCH) --cdrom $<
 
 clean:
-	$(MAKE) -C kernel clean
-	$(MAKE) -C libc clean
-	rm -rf sysroot
-	rm -rf isodir
-	rm -rf osrm.iso
+	@$(MAKE) -C kernel clean
+	@$(MAKE) -C libc clean
+	@rm -rf sysroot
+	@rm -rf isodir
+	@rm -rf osrm.iso
 

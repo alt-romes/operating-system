@@ -3,7 +3,9 @@
 
 #include <stdint.h>
 
+extern uint64_t* gdt;
 void setup_gdt(void);
-void create_gdt(uint64_t* gdt_addr);
+
+void create_gdt(void);
 
 #endif
