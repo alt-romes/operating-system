@@ -76,6 +76,13 @@ _start:
 	runtime support to work as well.
 	*/
 
+
+    /* r: the multiboot structure is loaded into RAM by the bootloader, and the
+    address pointing to it is stored in %eax. By pushing this address before
+    calling kernel_main we can access it from kernel.c as a function argument.
+    */
+    push %eax
+
     /*
 	Enter the high-level kernel. The ABI requires the stack is 16-byte
 	aligned at the time of the call instruction (which afterwards pushes
