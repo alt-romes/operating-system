@@ -16,7 +16,7 @@ rm source.zip
 
 cd "$ROOT/other/objconv/source"
 ./build.sh
-ln objconv "$ROOT/opt/other/bin/objconv"
+ln -f objconv "$ROOT/opt/other/bin/objconv"
 
 # xorriso
 cd "$ROOT/other"

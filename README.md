@@ -4,8 +4,12 @@
 
 cross-compilation and cross(?) grub:
 ```
-./build-cross-compiler.sh # builds gcc targeting elf-i686 and binutils targeting elf-i686
-./build-grub.sh # builds grub and its dependencies, and uses the elf-i686 binutils and gcc above to compile grub
+# ./scripts/build-cross-compiler.sh # builds gcc targeting elf-i686 and binutils targeting elf-i686
+# Or, the better alternative:
+brew install i686-elf-gcc
+brew install i686-elf-binutils
+
+PYTHON=python3 ./scripts/build-grub.sh # builds grub and its dependencies, and uses the elf-i686 binutils and gcc above to compile grub
 ```
 
 load environment to work on the OS (e.g. add (cross) elf-i686-gcc to $PATH) (should be done on the directory containing `env.sh` to correctly set `$ROOT`)
